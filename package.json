@@ -1,0 +1,56 @@
+{
+  "name": "workbench",
+  "displayName": "HPC Workbench",
+  "description": "Manage HPC workbench sessions from VSCode",
+  "version": "0.1.0",
+  "extensionKind": [
+    "ui"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "workbench.start",
+        "title": "Workbench: Start"
+      },
+      {
+        "command": "workbench.end",
+        "title": "Workbench: End"
+      },
+      {
+        "command": "workbench.refresh",
+        "title": "Workbench: Refresh Status"
+      },
+      {
+        "command": "workbench.connectNewWindow",
+        "title": "Workbench: Connect (New Window)"
+      },
+      {
+        "command": "workbench.connectCurrentWindow",
+        "title": "Workbench: Connect (Current Window)"
+      }
+    ],
+    "configuration": {
+      "title": "HPC Workbench",
+      "properties": {}
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}
