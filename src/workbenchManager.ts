@@ -42,7 +42,7 @@ export class WorkbenchManager {
   public cachedInfo: WorkbenchInfo | null = null;
 
   private readonly sshHost = "gadi.nci.org.au";
-  readonly outputChannel = vscode.window.createOutputChannel("HPC Workbench");
+  readonly outputChannel = vscode.window.createOutputChannel("PBS Workbench");
 
   /** Run `job api <subcommand>` on the HPC and return parsed JSON */
 private async runApi(subcommand: string): Promise<ApiResponse> {

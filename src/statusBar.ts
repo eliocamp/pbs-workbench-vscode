@@ -151,7 +151,7 @@ function buildTooltip(info: WorkbenchInfo): vscode.MarkdownString {
   const isRunning = info.state === "R";
   const label = STATE_LABELS[info.state] ?? info.state;
 
-  md.appendMarkdown(`### HPC Workbench\n\n`);
+  md.appendMarkdown(`### PBS Workbench\n\n`);
   md.appendMarkdown(`| | |\n|---|---|\n`);
   md.appendMarkdown(`| **Job ID** | ${info.job_id} |\n`);
   md.appendMarkdown(`| **State** | ${label} |\n`);

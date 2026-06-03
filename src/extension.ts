@@ -54,7 +54,7 @@ async function showActionsMenu(
   if (!info) {
     const action = await vscode.window.showQuickPick(
       [{ label: "$(play) Start Workbench", action: "start" }],
-      { title: "HPC Workbench" },
+      { title: "PBS Workbench" },
     );
     if (action?.action === "start") {
       await manager.start();
@@ -77,7 +77,7 @@ async function showActionsMenu(
   ];
 
   const picked = await vscode.window.showQuickPick(items, {
-    title: `HPC Workbench — ${info.hostname}`,
+    title: `PBS Workbench — ${info.hostname}`,
     placeHolder: "Select an action",
   });
 
