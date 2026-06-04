@@ -34,15 +34,23 @@ export class StatusBarController implements vscode.Disposable {
   async refresh(): Promise<void> {
     this.showRefreshing();
     const prevState = this.lastState;
-    const info = await this.manager.fetchInfo();
+    const result = await this.manager.fetchInfo();
+
+    if (!result) {
+      this.lastState = null;
+      this.hide();
+      return;
+    }
+    const info = result.info;
 
     if (!info) {
       this.lastState = null;
       this.hide();
       return;
     }
+    
     this.lastState = info.state;
-    this.update(info);
+    this.update(info, result.age);
     this.ensurePolling(info.state);
     if ((prevState === "Q" || prevState === "H") && info.state === "R") {
       vscode.window.showInformationMessage(
@@ -71,14 +79,17 @@ export class StatusBarController implements vscode.Disposable {
     this.statusBarItem.show();
   }
 
-  private update(info: WorkbenchInfo): void {
+  private update(info: WorkbenchInfo, age: number = 0): void {
     const label = STATE_LABELS[info.state] ?? info.state;
     const isRunning = info.state === "R";
     const remaining = timeRemaining(info);
 
+    const STALE_LIMIT = 2;
+    const icon = age > STALE_LIMIT ? "warning" : "server";
+    
     this.statusBarItem.text = isRunning
-      ? `$(server) PBS Workbench ${formatSeconds(remaining)}`
-      : `$(server) PBS Workbench — ${label}`;
+      ? `$(${icon}) PBS Workbench ${formatSeconds(remaining)}`
+      : `$(${icon}) PBS Workbench — ${label}`;
 
     this.statusBarItem.tooltip = buildTooltip(info);
     this.statusBarItem.backgroundColor = isRunning

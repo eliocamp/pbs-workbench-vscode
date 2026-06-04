@@ -20,6 +20,11 @@ export interface WorkbenchInfo {
   };
 }
 
+interface FetchResult {
+  info: WorkbenchInfo | null;
+  age: number;  // consecutive errors since last successful fetch
+}
+
 /** Derived values computed from raw WorkbenchInfo */
 export function timeRemaining(info: WorkbenchInfo): number {
   return Math.max(0, info.requested.walltime - info.used.walltime);
@@ -34,12 +39,14 @@ export function ramTotalGb(info: WorkbenchInfo): number {
 }
 
 interface ApiResponse {
-  output?: WorkbenchInfo;
+  output: WorkbenchInfo[];
   error?: string;
 }
 
 export class WorkbenchManager {
   public cachedInfo: WorkbenchInfo | null = null;
+  private consecutiveErrors = 0;
+  private readonly maxRetries = 5;
 
   private readonly sshHost = "gadi.nci.org.au";
   readonly outputChannel = vscode.window.createOutputChannel("PBS Workbench");
@@ -57,29 +64,44 @@ export class WorkbenchManager {
         this.log(`stdout: ${stdout}`);
         if (err) {
           this.log(`error: ${err.message}`);
-          resolve({ error: stderr || err.message });
+          resolve({ error: stderr || err.message, output: []});
           return;
         }
         try {
           resolve(JSON.parse(stdout.trim()));
         } catch {
-          resolve({ error: `Invalid JSON response: ${stdout}` });
+          resolve({ error: `Invalid JSON response: ${stdout}`, output: []});
         }
       });
     });
   }
 
   /** Fetch current workbench info. Returns null if no workbench is running. */
-  async fetchInfo(): Promise<WorkbenchInfo | null> {
+  async fetchInfo(): Promise<FetchResult | null> {
     const response = await this.runApi("info");
 
-    if (response.error || !response.output) {
+    if (response.error) {
+      // Keep state if there's an error. 
+      this.consecutiveErrors++;
+      this.log(`Error contacting gadi (${this.consecutiveErrors}/${this.maxRetries})`)
+      if (this.consecutiveErrors >= this.maxRetries) {
+        this.log(`Max retries reached (${this.maxRetries})`)
+        this.cachedInfo = null;
+        this.consecutiveErrors = 0;
+        return null
+      }
+
+      return {info: this.cachedInfo, age: this.consecutiveErrors}
+    }
+    this.consecutiveErrors = 0;
+
+    if (response.output.length == 0) {
       this.cachedInfo = null;
       return null;
     }
 
-    this.cachedInfo = response.output;
-    return this.cachedInfo;
+    this.cachedInfo = response.output[0];
+    return {info: this.cachedInfo, age: 0}
   }
 
   /** Start a new workbench */
