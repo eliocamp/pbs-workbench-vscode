@@ -1,0 +1,7 @@
+src/
+.github/
+*.vsix
+*.sh
+tsconfig.json
+.gitignore
+package-lock.json

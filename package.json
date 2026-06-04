@@ -1,8 +1,9 @@
 {
-  "name": "workbench",
+  "name": "pbs-workbench",
   "displayName": "PBS Workbench",
   "description": "Manage PBS workbench sessions from VSCode",
   "repository": "https://github.com/eliocamp/pbs-workbench-vscode",
+  "publisher":  "eliocamp",
   "version": "0.1.0",
   "extensionKind": [
     "ui"
