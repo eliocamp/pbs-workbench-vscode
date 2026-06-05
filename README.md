@@ -19,12 +19,12 @@ VSCode/Positron extension for managing interactive PBS workbench sessions on Gad
 
    Via the command line:
    ```
-   code --install-extension pbs-workbench.vsix
+   code --install-extension pbs-workbench.vsix --force
    ```
    or 
 
    ```
-   positron --install-extension pbs-workbench.vsix
+   positron --install-extension pbs-workbench.vsix --force
    ```
 
    Or via the UI: open the Extensions panel, click the `...` menu, select "Install from VSIX", and choose the downloaded file.
