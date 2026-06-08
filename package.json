@@ -4,7 +4,7 @@
   "description": "Manage PBS workbench sessions from VSCode",
   "repository": "https://github.com/eliocamp/pbs-workbench-vscode",
   "publisher":  "eliocamp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "extensionKind": [
     "ui"
   ],
