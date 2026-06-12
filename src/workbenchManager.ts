@@ -47,6 +47,7 @@ export class WorkbenchManager {
   public cachedInfo: WorkbenchInfo | null = null;
   private consecutiveErrors = 0;
   private readonly maxRetries = 5;
+  private requestId = 0; 
 
   private readonly sshHost = "gadi.nci.org.au";
   readonly outputChannel = vscode.window.createOutputChannel("PBS Workbench");
@@ -78,7 +79,13 @@ export class WorkbenchManager {
 
   /** Fetch current workbench info. Returns null if no workbench is running. */
   async fetchInfo(): Promise<FetchResult | null> {
+    const currentRequestId = ++this.requestId; 
     const response = await this.runApi("info");
+
+    if (currentRequestId !== this.requestId) {
+      this.log(`Ignoring stale response (${currentRequestId} !== ${this.requestId})`);
+      return this.cachedInfo ? {info: this.cachedInfo, age: this.consecutiveErrors} : null;
+    }
 
     if (response.error) {
       // Keep state if there's an error. 
@@ -107,6 +114,7 @@ export class WorkbenchManager {
   /** Start a new workbench */
   async start(): Promise<void> {
     vscode.window.showInformationMessage("Workbench starting. Status will update shortly.");
+    ++this.requestId; 
     const response = await this.runApi("start");
 
     if (response.error) {
@@ -116,7 +124,8 @@ export class WorkbenchManager {
   }
 
   /** End the running workbench */
-  async end(): Promise<void> {
+  async end(): Promise<void> {    
+    ++this.requestId; 
     const response = await this.runApi("end");
 
     if (response.error) {
