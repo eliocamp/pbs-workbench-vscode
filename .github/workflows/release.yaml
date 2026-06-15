@@ -28,8 +28,8 @@ jobs:
 
       - name: Publish to Open VSX Registry
         env:
-          OVSX_TOKEN : ${{ secrets.OVSX_TOKEN }}
-        run: npx ovsx publish 'pbs-workbench.vsix' -p $OVSX_TOKEN
+          OPEN_VSX_TOKEN : ${{ secrets.OPEN_VSX_TOKEN }}
+        run: npx ovsx publish 'pbs-workbench.vsix' -p $OPEN_VSX_TOKEN
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v3
