@@ -26,6 +26,9 @@ jobs:
       - name: Package
         run: npx vsce package --out pbs-workbench.vsix
 
+      - name: Publish to Open VSX Registry
+        run: npx ovsx publish 'pbs-workbench.vsix' -p ${{ secrets.OVSX_TOKEN }}
+
       - name: Upload release asset
         uses: softprops/action-gh-release@v3
         with:
