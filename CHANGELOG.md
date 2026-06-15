@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.2] - 2026-06-15
+
+### Added
+
+- Improves stability when API responses arrive out of order. 
+
 ## [0.1.1] - 2026-06-08
 
 ### Added
