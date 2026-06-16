@@ -1,6 +1,6 @@
-# pbs-workbench
+# PBS Workbench
 
-VSCode/Positron extension for managing interactive PBS workbench sessions on Gadi (NCI).
+VSCode/Positron extension for managing interactive PBS workbench sessions on Gadi. 
 
 ## Requirements
 
@@ -13,26 +13,25 @@ VSCode/Positron extension for managing interactive PBS workbench sessions on Gad
 
 ## Installation
 
-1. Download the latest `.vsix` file from the [releases page](https://github.com/eliocamp/pbs-workbench-vscode/releases).
+The extension is [published on the Open VSX Registry](https://open-vsx.org/extension/eliocamp/pbs-workbench).
+Install it from the marketplace or by opening the Quick Open menu (Ctrl+P) and pasting the command: 
 
-2. Install it in VSCode or Positron:
+```
+ext install eliocamp.pbs-workbench
+```
 
-   Via the command line:
-   ```
-   code --install-extension pbs-workbench.vsix --force
-   ```
-   or 
-
-   ```
-   positron --install-extension pbs-workbench.vsix --force
-   ```
-
-   Or via the UI: open the Extensions panel, click the `...` menu, select "Install from VSIX", and choose the downloaded file.
+If your editor doesn't support the Open VSX Registry, you can [download the .vsix file](https://open-vsx.org/extension/eliocamp/pbs-workbench) from the home page and use the Install from VSIX... command. 
 
 ## Usage
 
 To start a new workbench, use the command palette (open with `Ctrl+Shift+P` or `Cmd+Shift+P`) and run `Workbench: Start`. 
+
+![](imgs/starting.png)
+
 This will start your default profile. 
 An indicator at the bottom right of the screen will show you the status of your workbench and a notification will pop up once it's ready. 
 You can connect to the compute node directly by clicking the "Connect" button in the notification. 
+
+![](imgs/ready.png)
+
 Clicking the status bar will also will open a menu with options to connect and stop the workbench. 
