@@ -13,14 +13,12 @@ VSCode/Positron extension for managing interactive PBS workbench sessions on Gad
 
 ## Installation
 
-The extension is [published on the Open VSX Registry](https://open-vsx.org/extension/eliocamp/pbs-workbench).
+The extension is [published on the Open VSX Registry](https://open-vsx.org/extension/eliocamp/pbs-workbench) and on [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=eliocamp.pbs-workbench).
 Install it from the marketplace or by opening the Quick Open menu (Ctrl+P) and pasting the command: 
 
 ```
 ext install eliocamp.pbs-workbench
 ```
-
-If your editor doesn't support the Open VSX Registry, you can [download the .vsix file](https://open-vsx.org/extension/eliocamp/pbs-workbench) from the home page and use the Install from VSIX... command. 
 
 ## Usage
 
